@@ -78,7 +78,9 @@ python convergence_study.py --param NS --values 81,101,121,161,201
 - Each plot shows error |DP − MC| vs parameter.
 
 #### Typical plot
-![Convergence Example](convergence_figs/convergence_NS.png)
+![Convergence on varying Ns](convergence_figs/conv_NS.png)
+![Convergence on varying Na](convergence_figs/conv_NA.png)
+![Convergence on varying Kgh](convergence_figs/conv_Kgh.png)
 
 ---
 
@@ -112,10 +114,11 @@ Three clean frontier plots at different times:
 | `frontier_075.png` | Frontier at 75% maturity |
 
 #### Typical plot
-![Frontier Example](figs/frontier_050.png)
+![Frontier at 25% maturity](exersize_frontier_figs/frontier_025.png)
+![Frontier at 50% maturity](exersize_frontier_figs/frontier_050.png)
+![Frontier at 75% maturity](exersize_frontier_figs/frontier_075.png)
 
 **Interpretation:**  
-White line = early-exercise boundary.  
 Yellow = exercise region (deep ITM), Purple = continuation region.
 
 ---
@@ -192,8 +195,10 @@ python sensitivity_stats.py
 | `price_vs_M.png` | Time steps (M=N) | Combined effect of averaging + granularity |
 
 #### Typical plots
-![Overlay vs Sigma](sensitivity_overlay/price_vs_sigma.png)
-![Overlay vs K](sensitivity_overlay/price_vs_K.png)
+![Price vs Sigma](sensitivity_figs/price_vs_sigma.png)
+![Price vs K](sensitivity_figs/price_vs_K.png)
+![Price vs M](sensitivity_figs/price_vs_M.png)
+![Price vs r](sensitivity_figs/price_vs_r.png)
 
 **Interpretation:**
 \(
@@ -250,7 +255,4 @@ V_{Euro} \le V_{Berm} \le V_{Amer}
 - Hull (2020), *Options, Futures, and Other Derivatives*.  
 - Carverhill (1992), *Discrete Dynamic Programming for Option Pricing*.
 
----
 
-### 🧠 Tip
-All scripts share the same modular class `DPSolverAsian`, making this framework easily extensible to **barrier**, **lookback**, or **state-dependent** payoffs.
