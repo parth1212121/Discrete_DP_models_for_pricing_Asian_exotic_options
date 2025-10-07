@@ -1,5 +1,5 @@
 
-# 🧮 Discrete dynamic programming models for pricing Asian exotic options
+# 🧮 Discrete Dynamic Programming Models for Pricing Asian Exotic Options
 
 This repository implements **discrete dynamic programming (DP)** models for pricing **Asian exotic options** — including **European**, **Bermudan**, and **American** styles.  
 It provides validated numerical convergence studies, early-exercise frontier visualizations, early-premium analysis, and full sensitivity overlays.
@@ -29,128 +29,176 @@ It provides validated numerical convergence studies, early-exercise frontier vis
 
 ## ⚙️ 1. Core Mathematical Model
 
-We discretize the **state space** \\((S, A)\\) where:
+We discretize the **state space** \((S, A)\), where:
 
-- Spot price \\(S_t\\) follows a lognormal process:
-  $$
+- **Underlying dynamics:**
+  ```math
   S_{t+\Delta t} = S_t \, e^{(r-q-\frac{1}{2}\sigma^2)\Delta t + \sigma\sqrt{\Delta t}\,Z}
-  $$
+  ```
 
-- Arithmetic average is updated as:
-  $$
+- **Arithmetic average update:**
+  ```math
   A_{t+\Delta t} = \frac{kA_t + S_{t+\Delta t}}{k+1}, \quad \text{if } t \text{ is a monitoring date.}
-  $$
+  ```
 
-- Bellman recursion:
-  $$
+- **Dynamic programming recursion:**
+  ```math
   V_n(S,A) =
   \begin{cases}
   e^{-r\Delta t}\,\mathbb{E}[\,V_{n+1}(S',A')\,], & \text{(continuation)} \\[4pt]
   \max\{\Phi(S,A),\,e^{-r\Delta t}\,\mathbb{E}[V_{n+1}] \}, & \text{(exercise step)}
   \end{cases}
-  $$
+  ```
 
-Expectation is computed using **Gauss–Hermite quadrature** over the normal random variable \\(Z\\).
+Expectation \(\mathbb{E}[\cdot]\) is evaluated using **Gauss–Hermite quadrature** with pre-tabulated nodes and weights.
 
 ---
 
-## 🧩 2. Script Summaries and Usage
+## 🧩 2. Script Summaries and Command-Line Usage
 
-### **(a) `convergence_study.py`**
-Validates the DP solver against Monte Carlo (European Asian baseline).
+### 🧮 `convergence_study.py` — Numerical Validation
 
-**Usage:**
+Validates DP solver convergence against Monte Carlo pricing for **European Asian options**.
+
+#### Command-line options
+```bash
+--param {NS,NA,Kgh}   # which grid parameter to sweep
+--values VALS          # comma-separated list of values, e.g. 81,101,121,161,201
+--N 60                 # number of time steps (default 60)
+--Kgh 7                # number of Gauss–Hermite nodes
+--outdir convergence_figs
+```
+Example:
 ```bash
 python convergence_study.py --param NS --values 81,101,121,161,201
 ```
 
-**Generates:**
-- `convergence_NS.png`, `convergence_NA.png`, `convergence_Kgh.png` (in `/convergence_figs/`)
-- Each shows **error vs grid parameter** (|DP − MC|)
+#### Output
+- `convergence_NS.png`, `convergence_NA.png`, `convergence_Kgh.png`
+- Each plot shows error |DP − MC| vs parameter.
 
-**Interpretation:**
-- Error decreases as discretization refines — proof of convergence.
+#### Typical plot
+![Convergence Example](convergence_figs/convergence_NS.png)
 
 ---
 
-### **(b) `exersize_frontier.py`**
-Plots the **Bermudan early-exercise frontier** for an Asian Put.
+### ⚖️ `exersize_frontier.py` — Bermudan Exercise Frontier
 
-**Concept:**
-At each time slice, we plot the **exercise region** (yellow) and **continuation region** (purple).  
-The **white contour** marks the 0.5 level — the precise boundary of early exercise.
+Plots the **optimal early-exercise boundary** for a Bermudan Asian put option.
 
-**Usage:**
+#### Command-line options
 ```bash
-python exersize_frontier.py
+--NS 121        # grid points for S
+--NA 101        # grid points for A
+--N 60          # time steps
+--Kgh 7         # quadrature nodes
+--sigma 0.2     # volatility
+--K 100         # strike price
+--r 0.05        # interest rate
+--outdir figs   # output directory
+```
+Example:
+```bash
+python exersize_frontier.py --sigma 0.25 --K 100
 ```
 
-**Outputs:**
-```
-figs/
- ├── frontier_025.png
- ├── frontier_050.png
- └── frontier_075.png
-```
-Each corresponds to \\(t/T \in \{0.25, 0.5, 0.75\}\\).
+#### Output
+Three clean frontier plots at different times:
 
-**Interpretation:**
-- White line = optimal early-exercise boundary.  
-- Region above (low A, low S) → exercise; region below → continuation.
+| Plot | Description |
+|------|--------------|
+| `frontier_025.png` | Frontier at 25% maturity |
+| `frontier_050.png` | Frontier at 50% maturity |
+| `frontier_075.png` | Frontier at 75% maturity |
+
+#### Typical plot
+![Frontier Example](figs/frontier_050.png)
+
+**Interpretation:**  
+White line = early-exercise boundary.  
+Yellow = exercise region (deep ITM), Purple = continuation region.
 
 ---
 
-### **(c) `early_premium.py`**
-Computes the **early-exercise premium**:
+### 💰 `early_premium.py` — Early-Exercise Premium Analysis
 
-$$
+Computes and plots the **early-exercise premium**:
+```math
 \text{Premium} = V_{\text{Berm/Am}} - V_{\text{Euro}}
-$$
+```
 
-and plots how it changes with parameters \\(M, \sigma, K\\).
+#### Command-line options
+```bash
+--do_M          # vary number of time steps / monitoring dates
+--do_sigma      # vary volatility
+--do_K          # vary strike
+--style {berm,amer}    # option style
+--freq 5        # Bermudan exercise every `freq` steps
+--outdir premium_figs
+```
 
-**Usage examples:**
+Examples:
 ```bash
 python early_premium.py --do_M --style berm
 python early_premium.py --do_sigma --style amer
 python early_premium.py --do_K --style berm
 ```
 
-**Outputs:** `/premium_figs/`
-```
-premium_vs_M.png
-premium_vs_sigma.png
-premium_vs_K.png
-```
+#### Output
+| File | Description |
+|------|--------------|
+| `premium_vs_M.png` | Premium vs number of time steps |
+| `premium_vs_sigma.png` | Premium vs volatility |
+| `premium_vs_K.png` | Premium vs strike |
+
+#### Typical plots
+![Premium vs M](premium_figs/premium_vs_M.png)
+![Premium vs Sigma](premium_figs/premium_vs_sigma.png)
+![Premium vs K](premium_figs/premium_vs_K.png)
 
 **Interpretation:**
-- Premium ↑ with volatility \\(\sigma\\).  
-- Premium ↓ with number of monitoring dates \\(M\\) (averaging smooths paths).  
-- Premium peaks near-the-money, small when deep ITM or OTM.
+- Premium increases with volatility (more uncertainty → more optionality).  
+- Premium decreases with more averaging (less volatility).  
+- Peak premium near ATM (K ≈ S₀).
 
 ---
 
-### **(d) `sensitivity_stats.py`**
-Generates **overlay sensitivity plots** comparing European, Bermudan, and American options.
+### 📊 `sensitivity_stats.py` — Multi-Style Sensitivity Overlay
 
-**Usage:**
+Generates **overlay charts** for European, Bermudan, and American Asian options.
+
+#### Command-line options
+```bash
+--sigmas 0.10,0.20,0.30,0.40,0.50
+--rates 0.00,0.02,0.05,0.08
+--strikes 80,90,100,110,120
+--M_list 12,24,52
+--berm_freq 5
+--NS 121 --NA 101 --N 60 --Kgh 7
+--outdir sensitivity_overlay
+```
+
+#### Example
 ```bash
 python sensitivity_stats.py
 ```
 
-**Outputs:** `/sensitivity_overlay/`
-| File | X-Axis | Description |
-|------|--------|-------------|
-| `price_vs_sigma.png` | Volatility \\(\\sigma\\) | Price increases with \\(\\sigma\\) |
-| `price_vs_r.png` | Interest rate \\(r\\) | Discounting + drift effect |
-| `price_vs_K.png` | Strike \\(K\\) | Decreasing function of \\(K\\) |
-| `price_vs_M.png` | Time steps \\(M=N\\) | Combined averaging + granularity effect |
+#### Output
+| File | X-axis | Description |
+|------|---------|-------------|
+| `price_vs_sigma.png` | Volatility | Price ↑ with σ |
+| `price_vs_r.png` | Interest rate | Drift and discounting effects |
+| `price_vs_K.png` | Strike | Price ↓ with K |
+| `price_vs_M.png` | Time steps (M=N) | Combined effect of averaging + granularity |
+
+#### Typical plots
+![Overlay vs Sigma](sensitivity_overlay/price_vs_sigma.png)
+![Overlay vs K](sensitivity_overlay/price_vs_K.png)
 
 **Interpretation:**
-$$
+\(
 V_{Euro} \le V_{Berm} \le V_{Amer}
-$$
-Overlay plots clearly show the gain in flexibility (exercise value).
+\)
 
 ---
 
@@ -158,15 +206,45 @@ Overlay plots clearly show the gain in flexibility (exercise value).
 
 | Feature | Observation |
 |----------|--------------|
-| **Convergence** | DP error stabilizes well within MC 95% CI. |
-| **Frontier** | Moves inward with time; smooth transition from early exercise to continuation. |
-| **Premium vs σ** | Increases sharply with volatility. |
-| **Premium vs M** | Decreases (averaging reduces path variance). |
-| **Sensitivity overlays** | Maintain hierarchy Euro < Berm < Amer. |
+| **Convergence** | DP error stabilizes within Monte Carlo 95% CI. |
+| **Frontier** | Smooth inward-moving early-exercise boundary. |
+| **Premium vs σ** | Grows rapidly with volatility. |
+| **Premium vs M** | Declines with finer averaging. |
+| **Sensitivity overlays** | Maintain hierarchy \(V_{Euro} < V_{Berm} < V_{Amer}\). |
 
 ---
 
-## 📜 4. References
+## 📘 4. Theoretical Insights
+
+- Using **log-spaced grids** for \(S\) and **linear grids** for \(A\) improves numerical stability.
+- Gauss–Hermite quadrature with \(K_{gh} \in [5,9]\) nodes provides fast, accurate expectations.
+- Early exercise decisions are purely **local**, based on comparing continuation and immediate payoff values.
+- The **Bermudan–American difference** shrinks rapidly as the DP time grid \(N\) increases.
+
+---
+
+## 🧪 5. Example Reproduction Workflow
+
+1. Run convergence validation:
+   ```bash
+   python convergence_study.py --param NS --values 81,121,161,201
+   ```
+2. Generate Bermudan frontiers:
+   ```bash
+   python exersize_frontier.py
+   ```
+3. Compute early-exercise premium curves:
+   ```bash
+   python early_premium.py --do_sigma --style berm
+   ```
+4. Produce multi-style overlays:
+   ```bash
+   python sensitivity_stats.py
+   ```
+
+---
+
+## 📜 6. References
 
 - Rogers & Shi (1995), *The Value of an Asian Option*, J. Appl. Prob.  
 - Hull (2020), *Options, Futures, and Other Derivatives*.  
@@ -174,3 +252,5 @@ Overlay plots clearly show the gain in flexibility (exercise value).
 
 ---
 
+### 🧠 Tip
+All scripts share the same modular class `DPSolverAsian`, making this framework easily extensible to **barrier**, **lookback**, or **state-dependent** payoffs.
