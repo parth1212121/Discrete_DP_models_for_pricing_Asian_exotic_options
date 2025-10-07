@@ -154,34 +154,7 @@ Overlay plots clearly show the gain in flexibility (exercise value).
 
 ---
 
-## 📊 3. Figure Directory Layout
-
-```
-figs/
- ├── frontier_025.png
- ├── frontier_050.png
- └── frontier_075.png
-
-premium_figs/
- ├── premium_vs_M.png
- ├── premium_vs_sigma.png
- └── premium_vs_K.png
-
-sensitivity_overlay/
- ├── price_vs_sigma.png
- ├── price_vs_r.png
- ├── price_vs_K.png
- └── price_vs_M.png
-
-convergence_figs/
- ├── convergence_NS.png
- ├── convergence_NA.png
- └── convergence_Kgh.png
-```
-
----
-
-## 📈 4. Typical Observations
+## 📈 3. Typical Observations
 
 | Feature | Observation |
 |----------|--------------|
@@ -193,7 +166,7 @@ convergence_figs/
 
 ---
 
-## 📜 5. References
+## 📜 4. References
 
 - Rogers & Shi (1995), *The Value of an Asian Option*, J. Appl. Prob.  
 - Hull (2020), *Options, Futures, and Other Derivatives*.  
@@ -201,7 +174,3 @@ convergence_figs/
 
 ---
 
-### 🧠 Tip
-All scripts share a unified solver `DPSolverAsian`, so extending this framework to **barrier** or **lookback** options only requires modifying the payoff function.
-
----
