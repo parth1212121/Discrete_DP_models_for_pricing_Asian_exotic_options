@@ -228,7 +228,7 @@ python sensitivity_stats.py
 | **Frontier** | Smooth inward-moving early-exercise boundary. |
 | **Premium vs σ** | Grows rapidly with volatility. |
 | **Premium vs M** | Declines with finer averaging. |
-| **Sensitivity overlays** | Maintain hierarchy V_Euro < V_Berm < V_Amer. |
+| **Sensitivity overlays** | Maintain hierarchy <small>V<sub>Euro</sub> ≤ V<sub>Berm</sub> ≤ V<sub>Amer</sub></small>. |
 
 ---
 
