@@ -65,7 +65,7 @@ We discretize the **state space** \((S, A)\), where:
   \end{cases}
   ```
 
-Expectation ![E](https://latex.codecogs.com/svg.latex?\mathbb{E}[\cdot]) is evaluated using **Gauss–Hermite quadrature** with pre-tabulated nodes and weights.
+Expectation ![E](https://latex.codecogs.com/svg.latex?\dpi{120}\color{white}\mathbb{E}[\cdot]) is evaluated using **Gauss–Hermite quadrature** with pre-tabulated nodes and weights.
 
 ---
 
@@ -217,7 +217,8 @@ python sensitivity_stats.py
 
 **Interpretation:**
 
-![ineq](https://latex.codecogs.com/svg.latex?V_{Euro}\le%20V_{Berm}\le%20V_{Amer})
+![ineq](https://latex.codecogs.com/svg.latex?\dpi{120}\color{white}V_{Euro}\le%20V_{Berm}\le%20V_{Amer})
+
 ---
 
 ## 📈 3. Typical Observations
