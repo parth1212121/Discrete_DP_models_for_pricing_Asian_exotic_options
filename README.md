@@ -215,7 +215,7 @@ python sensitivity_stats.py
 ![Price vs M](sensitivity_figs/price_vs_M.png)
 ![Price vs r](sensitivity_figs/price_vs_r.png)
 
-**Interpretation:**
+#### Interpretation
 
 V_Euro < V_Berm < V_Amer
 ---
