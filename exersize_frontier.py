@@ -46,8 +46,7 @@ def plot_frontier_clean(mask, Sg, Ag, title, savepath=None, smooth_sigma=0.0):
         png_path = root + ".png"
         pdf_path = root + ".pdf"
         fig.savefig(png_path, dpi=300, bbox_inches="tight")
-        fig.savefig(pdf_path, dpi=300, bbox_inches="tight")
-        print("Saved:", png_path, "and", pdf_path)
+        print("Saved:", png_path)
 
     plt.show()
 
@@ -81,7 +80,7 @@ def main():
     target_steps = [s if s in step_to_idx else min(ex_steps_sorted, key=lambda x: abs(x - s))
                     for s in target_steps]
 
-    outdir = "figs"
+    outdir = "exersize_frontier_figs"
     os.makedirs(outdir, exist_ok=True)
 
     for frac, step in zip(targets, target_steps):

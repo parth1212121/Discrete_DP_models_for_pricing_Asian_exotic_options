@@ -76,7 +76,7 @@ def main():
     ap.add_argument("--strikes", type=str, default="80,90,100,110,120")
     ap.add_argument("--M_list", type=str, default="12,24,52")
     # Output
-    ap.add_argument("--outdir", type=str, default="sensitivity_overlay")
+    ap.add_argument("--outdir", type=str, default="sensitivity_figs")
     args = ap.parse_args()
 
     os.makedirs(args.outdir, exist_ok=True)

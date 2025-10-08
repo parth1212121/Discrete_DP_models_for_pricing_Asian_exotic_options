@@ -27,6 +27,21 @@ It provides validated numerical convergence studies, early-exercise frontier vis
 
 ---
 
+---
+
+## 🚀 Installation
+
+
+Clone the repository and install dependencies via `requirements.txt`:
+
+```bash
+git clone https://github.com/<your-username>/<repo-name>.git
+cd <repo-name>
+pip install -r requirements.txt
+```
+
+
+
 ## ⚙️ 1. Core Mathematical Model
 
 We discretize the **state space** \((S, A)\), where:
@@ -50,7 +65,7 @@ We discretize the **state space** \((S, A)\), where:
   \end{cases}
   ```
 
-Expectation \(\mathbb{E}[\cdot]\) is evaluated using **Gauss–Hermite quadrature** with pre-tabulated nodes and weights.
+Expectation ![E](https://latex.codecogs.com/svg.latex?\mathbb{E}[\cdot]) is evaluated using **Gauss–Hermite quadrature** with pre-tabulated nodes and weights.
 
 ---
 
@@ -70,7 +85,7 @@ Validates DP solver convergence against Monte Carlo pricing for **European Asian
 ```
 Example:
 ```bash
-python convergence_study.py --param NS --values 81,101,121,161,201
+python convergence_study.py --param NS --values 81,101,121,161,201,301
 ```
 
 #### Output
@@ -201,10 +216,8 @@ python sensitivity_stats.py
 ![Price vs r](sensitivity_figs/price_vs_r.png)
 
 **Interpretation:**
-\(
-V_{Euro} \le V_{Berm} \le V_{Amer}
-\)
 
+![ineq](https://latex.codecogs.com/svg.latex?V_{Euro}\le%20V_{Berm}\le%20V_{Amer})
 ---
 
 ## 📈 3. Typical Observations
@@ -232,7 +245,9 @@ V_{Euro} \le V_{Berm} \le V_{Amer}
 
 1. Run convergence validation:
    ```bash
-   python convergence_study.py --param NS --values 81,121,161,201
+   python convergence_study.py --param NS --values 81,121,161,201,301
+   python convergence_study.py --param NA --values 61,81,101,141,181
+   python convergence_study.py --param Kgh --values 3,5,7
    ```
 2. Generate Bermudan frontiers:
    ```bash
@@ -240,7 +255,9 @@ V_{Euro} \le V_{Berm} \le V_{Amer}
    ```
 3. Compute early-exercise premium curves:
    ```bash
-   python early_premium.py --do_sigma --style berm
+   python early_premium.py --do_M
+   python early_premium.py --do_sigma 
+   python early_premium.py --do_K 
    ```
 4. Produce multi-style overlays:
    ```bash
