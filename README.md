@@ -217,7 +217,7 @@ python sensitivity_stats.py
 
 **Interpretation:**
 
-<small>V<sub>Euro</sub> ≤ V<sub>Berm</sub> ≤ V<sub>Amer</sub></small>
+V_Euro < V_Berm < V_Amer
 ---
 
 ## 📈 3. Typical Observations
@@ -228,14 +228,14 @@ python sensitivity_stats.py
 | **Frontier** | Smooth inward-moving early-exercise boundary. |
 | **Premium vs σ** | Grows rapidly with volatility. |
 | **Premium vs M** | Declines with finer averaging. |
-| **Sensitivity overlays** | Maintain hierarchy \(V_{Euro} < V_{Berm} < V_{Amer}\). |
+| **Sensitivity overlays** | Maintain hierarchy V_Euro < V_Berm < V_Amer. |
 
 ---
 
 ## 📘 4. Theoretical Insights
 
 - Using **log-spaced grids** for \(S\) and **linear grids** for \(A\) improves numerical stability.
-- Gauss–Hermite quadrature with \(K_{gh} \in [5,9]\) nodes provides fast, accurate expectations.
+- Gauss–Hermite quadrature with \(K_gh \in [5,9]\) nodes provides fast, accurate expectations.
 - Early exercise decisions are purely **local**, based on comparing continuation and immediate payoff values.
 - The **Bermudan–American difference** shrinks rapidly as the DP time grid \(N\) increases.
 
