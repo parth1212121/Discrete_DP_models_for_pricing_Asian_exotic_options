@@ -217,7 +217,7 @@ python sensitivity_stats.py
 
 #### Interpretation
 
-<small>V<sub>Ero</sub> ≤ V<sub>Berm</sub> ≤ V<sub>Amer</sub></small>
+- <small>V<sub>Euro</sub> ≤ V<sub>Berm</sub> ≤ V<sub>Amer</sub></small>
 ---
 
 ## 📈 3. Typical Observations
