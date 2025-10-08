@@ -124,7 +124,7 @@ python convergence_study.py --param NS --values 81,101,121,161,201,301
   However, convergence in Kgh is relatively fast — beyond Kgh = 5 nodes, the improvement becomes marginal, indicating that quadrature error is secondary compared to grid discretization.
 
 - **Overall observation:**  
-  All three parameters (\(N_S\), \(N_A\), \(K_{gh}\)) show **monotonic convergence** of DP prices toward the Monte Carlo reference.  
+  All three parameters (\(NS\), \(NA\), \(Kgh\)) show **monotonic convergence** of DP prices toward the Monte Carlo reference.  
   The fact that |DP − MC| remains consistently **below the Monte Carlo 95% confidence half-width** validates both the **numerical accuracy** and **stochastic consistency** of the DP solver.
 
 ---
@@ -182,8 +182,6 @@ Three clean frontier plots at different times:
   The observed movement of the boundary illustrates rational early-exercise behavior —  
   holders are more inclined to exercise when (i) the option is deep ITM, and (ii) little time remains to recover potential value from holding.  
   The gradual inward shift of the boundary visually captures this dynamic decision-making process over time.
-
----
 
 
 ---
@@ -293,7 +291,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 - **Hierarchy:** The spread between Bermudan and American widens slightly at high σ — this is where early exercise flexibility is most beneficial.
 
 📈 **Plot:**  
-![Price vs Sigma](sensitivity_overlay/price_vs_sigma.png)
+![Price vs Sigma](sensitivity_figs/price_vs_sigma.png)
 
 ---
 
@@ -304,7 +302,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 - **Observation:** The three curves remain tightly packed — indicating that the Asian averaging dampens extreme payoff swings compared to plain vanilla options.
 
 📈 **Plot:**  
-![Price vs K](sensitivity_overlay/price_vs_K.png)
+![Price vs K](sensitivity_figs/price_vs_K.png)
 
 ---
 
@@ -315,7 +313,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 - **Observation:** The slopes of all curves are roughly parallel, confirming that early exercise flexibility has limited impact on the rate sensitivity (the discounting factor affects all styles similarly).
 
 📈 **Plot:**  
-![Price vs r](sensitivity_overlay/price_vs_r.png)
+![Price vs r](sensitivity_figs/price_vs_r.png)
 
 ---
 
@@ -326,7 +324,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 - **Observation:** The small gap between styles shows that averaging smooths volatility effects — the difference between European and American styles is smaller for Asian options than for plain vanilla ones.
 
 📈 **Plot:**  
-![Price vs M](sensitivity_overlay/price_vs_M.png)
+![Price vs M](sensitivity_figs/price_vs_M.png)
 
 ---
 
