@@ -275,16 +275,17 @@ python sensitivity_stats.py
 
 #### Theoretical Hierarchy
 For any parameter configuration, the prices maintain the fundamental inequality:
-\[
-V_{\text{Euro}} \le V_{\text{Berm}} \le V_{\text{Amer}}
-\]
+
+<small>V<sub>Euro</sub> ≤ V<sub>Berm</sub> ≤ V<sub>Amer</sub></small>
+
 This reflects the fact that additional exercise flexibility (more decision points) can never reduce value.
+
 
 ---
 
 #### Parameter-by-Parameter Interpretation
 
-##### **1️⃣ Volatility (σ) — “Optionality driver”**
+#### **1️⃣ Volatility (σ) — “Optionality driver”**
 - **Trend:** Prices **increase almost linearly** with σ for all three styles.  
 - **Reason:** Higher volatility raises the uncertainty in future payoffs, which **increases the option’s time value**.  
   Early exercise becomes more valuable since the underlying can deviate further from its mean path, giving the holder more favorable scenarios to lock in profit early.  
@@ -295,7 +296,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 
 ---
 
-##### **2️⃣ Strike (K) — “Moneyness effect”**
+#### **2️⃣ Strike (K) — “Moneyness effect”**
 - **Trend:** Prices **increase with K** (for a put).  
 - **Reason:** A higher strike increases intrinsic value \( (K - A) \), making early exercise attractive even before maturity.  
   Deep in-the-money (ITM) puts have high exercise probability, while out-of-the-money (OTM) puts are dominated by time value.  
@@ -306,7 +307,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 
 ---
 
-##### **3️⃣ Interest Rate (r) — “Discounting vs drift”**
+#### **3️⃣ Interest Rate (r) — “Discounting vs drift”**
 - **Trend:** Prices **decrease with r**.  
 - **Reason:** Higher rates increase the risk-free growth of the underlying asset, reducing the likelihood that the option finishes ITM.  
   Moreover, higher discounting reduces the present value of future payoffs.  
@@ -317,7 +318,7 @@ This reflects the fact that additional exercise flexibility (more decision point
 
 ---
 
-##### **4️⃣ Monitoring Frequency (M) — “Averaging granularity”**
+#### **4️⃣ Monitoring Frequency (M) — “Averaging granularity”**
 - **Trend:** Prices **increase slightly with M** for Bermudan and American options, while the European price tends to stabilize.  
 - **Reason:** Increasing M means finer discretization (smaller Δt), offering **more opportunities to exercise** (for Bermudan/American) and **smoother averaging** of the payoff.  
   As M grows, Bermudan prices approach American prices, reflecting convergence toward the continuous-time limit.  
